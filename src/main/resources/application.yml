@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: dev
+  # Disable Spring DataSource since we're using Exposed
+  # datasource:
+  #   url: jdbc:postgresql://localhost:5432/academic_management
+  #   username: postgres
+  #   password: password
+  #   driver-class-name: org.postgresql.Driver
+  
+  # Disable JPA since we're using Exposed
+  # jpa:
+  #   hibernate:
+  #     ddl-auto: none
+  #   show-sql: false
+
+# Application specific configuration
+app:
+  database:
+    url: jdbc:postgresql://localhost:5432/academic_management
+    username: postgres
+    password: password
+    driver: org.postgresql.Driver
+  
+  jwt:
+    secret: mySecretKey123456789012345678901234567890
+    expiration: 86400000 # 24 hours in milliseconds
+  
+  server:
+    port: 8080
+  
+  logging:
+    level:
+      academic_management: DEBUG
+      exposed: DEBUG
+
+# Spring Boot server configuration
+server:
+  port: ${app.server.port:8080}
+
+# Logging configuration
+logging:
+  level:
+    co.edu.school.academic_management_service: ${app.logging.level.academic_management:DEBUG}
+    org.jetbrains.exposed: ${app.logging.level.exposed:DEBUG}
+
+# OpenAPI/Swagger configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+    filter: true
+    displayRequestDuration: true
+    showExtensions: true
+    showCommonExtensions: true
+    defaultModelsExpandDepth: 2
+    defaultModelExpandDepth: 2
+    docExpansion: none
+    displayOperationId: false
+    useBasicAuthenticationWithAccessCodeGrant: false
+  show-actuator: true
+  # Configuración para estandarizar naming
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
